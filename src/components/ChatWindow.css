@@ -64,9 +64,9 @@
     height: 6px;
   }
   
-  .chatWindow--body::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.2);
-  }
+.chatWindow--body::-webkit-scrollbar-thumb {
+background-color: rgba(0, 0, 0, 0.2);
+}
   
 
 .chatWindow--footer {

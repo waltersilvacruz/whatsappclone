@@ -4,6 +4,7 @@ import './App.css';
 import ChatItemList from './components/ChatListItem';
 import ChatIntro from './components/ChatIntro';
 import ChatWindow from './components/ChatWindow';
+import NewChat from './components/NewChat';
 
 //icones
 import DonutLargeIcon from '@material-ui/icons/DonutLarge';
@@ -21,6 +22,8 @@ export default () => {
     {chatId: 5, title: 'Fulano de tal', image: 'https://img.lovepik.com/element/40032/5163.png_860.png'},
   ]);
 
+  const [showNewChat, setShowNewChat] = useState(false);
+
   const [activeChat, setActiveChat] = useState({});
   const[user, setUser] = useState({
     id: 2,
@@ -28,16 +31,21 @@ export default () => {
     name: 'Walter Cruz'
   });
 
+  const handleNewChat = () => {
+    setShowNewChat(true);
+  }
+
   return (
     <div className="app-window">
       <div className="sidebar">
+        <NewChat show={showNewChat} setShow={setShowNewChat} user={user} chatlist={chatlist} />
         <header>
           <img src={user.avatar} alt="" className="header--avatar" />
           <div className="header--buttons">
             <div className="header--btn">
               <DonutLargeIcon style={{color: '#919191'}} />
             </div>
-            <div className="header--btn">
+            <div className="header--btn" onClick={handleNewChat}>
               <ChatIcon style={{color: '#919191'}} />
             </div>
             <div className="header--btn">
