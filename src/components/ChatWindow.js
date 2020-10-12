@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import EmojiPicker from 'emoji-picker-react';
+import MessageItem from './MessageItem';
 
 import './ChatWindow.css';
 
@@ -12,7 +13,9 @@ import CloseIcon from '@material-ui/icons/Close';
 import SendIcon from '@material-ui/icons/Send';
 import MicIcon from '@material-ui/icons/Mic';
 
-export default ()=> {
+export default ({user})=> {
+
+    const body = useRef();
 
     let recognition = null;
     let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -21,9 +24,84 @@ export default ()=> {
         recognition = new SpeechRecognition();
     }
 
-    const [ emojiOpen, setEmojiOpen ] = useState(false);
-    const [ text, setText ] = useState('');
-    const [ listening, setListening ] = useState(false);
+    const [emojiOpen, setEmojiOpen] = useState(false);
+    const [text, setText] = useState('');
+    const [listening, setListening] = useState(false);
+    const [list, setList] = useState([
+        {
+            author: 1,
+            body: 'Lorem ipsum dolor siet amet'
+        },
+        {
+            author: 1,
+            body: 'Isso é inaceitavel!'
+        },
+        {
+            author: 2,
+            body: 'Compreendo...'
+        },{
+            author: 1,
+            body: 'Lorem ipsum dolor siet amet'
+        },
+        {
+            author: 1,
+            body: 'Isso é inaceitavel!'
+        },
+        {
+            author: 2,
+            body: 'Compreendo...'
+        },{
+            author: 1,
+            body: 'Lorem ipsum dolor siet amet'
+        },
+        {
+            author: 1,
+            body: 'Isso é inaceitavel!'
+        },
+        {
+            author: 2,
+            body: 'Compreendo...'
+        },{
+            author: 1,
+            body: 'Lorem ipsum dolor siet amet'
+        },
+        {
+            author: 1,
+            body: 'Isso é inaceitavel!'
+        },
+        {
+            author: 2,
+            body: 'Compreendo...'
+        },{
+            author: 1,
+            body: 'Lorem ipsum dolor siet amet'
+        },
+        {
+            author: 1,
+            body: 'Isso é inaceitavel!'
+        },
+        {
+            author: 2,
+            body: 'Compreendo...'
+        },{
+            author: 1,
+            body: 'Lorem ipsum dolor siet amet'
+        },
+        {
+            author: 1,
+            body: 'Isso é inaceitavel!'
+        },
+        {
+            author: 2,
+            body: 'Compreendo...'
+        }
+    ]);
+
+    useEffect(() => {
+        if(body.current.scrollHeight > body.current.offsetHeight) {
+            body.current.scrollTop = body.current.scrollHeight - body.current.offsetHeight;
+        }
+    }, [list]);
 
     const handleEmojiClick = (e, emojiObject) => {
         setText(text + emojiObject.emoji);
@@ -82,8 +160,14 @@ export default ()=> {
                 </div>
             </div>
 
-            <div className="chatWindow--body">
-
+            <div className="chatWindow--body" ref={body}>
+                {list.map((item, key) => (
+                    <MessageItem
+                        key={key}
+                        data={item}
+                        user={user}
+                    />
+                ))}
             </div>
 
             <div 

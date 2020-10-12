@@ -22,12 +22,17 @@ export default () => {
   ]);
 
   const [activeChat, setActiveChat] = useState({});
+  const[user, setUser] = useState({
+    id: 2,
+    avatar: 'https://www.blexar.com/avatar.png',
+    name: 'Walter Cruz'
+  });
 
   return (
     <div className="app-window">
       <div className="sidebar">
         <header>
-          <img src="https://img.freepik.com/vetores-gratis/avatar-de-personagem-de-empresario-isolado_24877-60111.jpg?size=338&ext=jpg&ga=GA1.2.708001390.1599523200" alt="" className="header--avatar" />
+          <img src={user.avatar} alt="" className="header--avatar" />
           <div className="header--buttons">
             <div className="header--btn">
               <DonutLargeIcon style={{color: '#919191'}} />
@@ -61,7 +66,7 @@ export default () => {
       </div>
       <div className="contentarea">  
         {activeChat.chatId !== undefined &&
-          <ChatWindow />
+          <ChatWindow user={user} />
         }
 
         {activeChat.chatId === undefined &&
