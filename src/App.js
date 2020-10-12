@@ -14,11 +14,11 @@ import SearchIcon from '@material-ui/icons/Search';
 export default () => {
 
   const [chatlist, setChatList] = useState([
-    {chatId: 1, title: 'Fulano de tal', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQtG0T1Y9ZYq13u7G0EI-igcBsfk-qFbF5cIQ&usqp=CAU'},
-    {chatId: 2, title: 'Fulano de tal', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQtG0T1Y9ZYq13u7G0EI-igcBsfk-qFbF5cIQ&usqp=CAU'},
-    {chatId: 3, title: 'Fulano de tal', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQtG0T1Y9ZYq13u7G0EI-igcBsfk-qFbF5cIQ&usqp=CAU'},
-    {chatId: 4, title: 'Fulano de tal', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQtG0T1Y9ZYq13u7G0EI-igcBsfk-qFbF5cIQ&usqp=CAU'},
-    {chatId: 5, title: 'Fulano de tal', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQtG0T1Y9ZYq13u7G0EI-igcBsfk-qFbF5cIQ&usqp=CAU'},
+    {chatId: 1, title: 'Fulano de tal', image: 'https://img.lovepik.com/element/40150/6018.png_860.png'},
+    {chatId: 2, title: 'Fulano de tal', image: 'https://www.w3schools.com/howto/img_avatar.png'},
+    {chatId: 3, title: 'Fulano de tal', image: 'https://www.w3schools.com/w3images/avatar6.png'},
+    {chatId: 4, title: 'Fulano de tal', image: 'https://www.blexar.com/avatar.png'},
+    {chatId: 5, title: 'Fulano de tal', image: 'https://img.lovepik.com/element/40032/5163.png_860.png'},
   ]);
 
   const [activeChat, setActiveChat] = useState({});
@@ -52,6 +52,7 @@ export default () => {
         {chatlist.map((item, key)=> (
           <ChatItemList 
             key={key}
+            data={item}
             active={activeChat.chatId === item.chatId}
             onClick={()=>setActiveChat(item)}
           />
