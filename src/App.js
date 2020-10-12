@@ -1,10 +1,13 @@
 import React, { useState, useEffect} from 'react';
 import './App.css';
 
+import Api from './Api';
+
 import ChatItemList from './components/ChatListItem';
 import ChatIntro from './components/ChatIntro';
 import ChatWindow from './components/ChatWindow';
 import NewChat from './components/NewChat';
+import Login from './components/Login';
 
 //icones
 import DonutLargeIcon from '@material-ui/icons/DonutLarge';
@@ -14,22 +17,32 @@ import SearchIcon from '@material-ui/icons/Search';
 
 export default () => {
 
-  const [chatlist, setChatList] = useState([
-    {chatId: 1, title: 'Fulano de tal', image: 'https://img.lovepik.com/element/40150/6018.png_860.png'},
-    {chatId: 2, title: 'Fulano de tal', image: 'https://www.w3schools.com/howto/img_avatar.png'},
-    {chatId: 3, title: 'Fulano de tal', image: 'https://www.w3schools.com/w3images/avatar6.png'},
-    {chatId: 4, title: 'Fulano de tal', image: 'https://www.blexar.com/avatar.png'},
-    {chatId: 5, title: 'Fulano de tal', image: 'https://img.lovepik.com/element/40032/5163.png_860.png'},
-  ]);
+  const [chatlist, setChatList] = useState([]);
 
   const [showNewChat, setShowNewChat] = useState(false);
 
   const [activeChat, setActiveChat] = useState({});
   const[user, setUser] = useState({
-    id: 2,
-    avatar: 'https://www.blexar.com/avatar.png',
-    name: 'Walter Cruz'
+    id: 'QR66VIcbzdWNtHrk1V7GQkZEPJy1',
+    name: 'Walter Cruz',
+    avatar: 'https://graph.facebook.com/3643279839049620/picture'
   });
+
+  const handleLoginData = async (fbUser) => {
+    let newUser = {
+      id: fbUser.uid,
+      name: fbUser.displayName,
+      avatar: fbUser.photoURL
+    };
+
+    // TODO: adicionar no firebase...
+    await Api.addUser(newUser);
+    setUser(newUser);
+  };
+
+  if(user === null) {
+    return (<Login onReceive={handleLoginData}  />);
+  }
 
   const handleNewChat = () => {
     setShowNewChat(true);
