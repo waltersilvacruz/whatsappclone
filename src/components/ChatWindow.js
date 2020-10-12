@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 import MessageItem from './MessageItem';
+import Api from '../Api';
 
 import './ChatWindow.css';
 
@@ -13,7 +14,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import SendIcon from '@material-ui/icons/Send';
 import MicIcon from '@material-ui/icons/Mic';
 
-export default ({user})=> {
+export default ({user, data})=> {
 
     const body = useRef();
 
@@ -27,81 +28,20 @@ export default ({user})=> {
     const [emojiOpen, setEmojiOpen] = useState(false);
     const [text, setText] = useState('');
     const [listening, setListening] = useState(false);
-    const [list, setList] = useState([
-        {
-            author: 1,
-            body: 'Lorem ipsum dolor siet amet'
-        },
-        {
-            author: 1,
-            body: 'Isso é inaceitavel!'
-        },
-        {
-            author: 2,
-            body: 'Compreendo...'
-        },{
-            author: 1,
-            body: 'Lorem ipsum dolor siet amet'
-        },
-        {
-            author: 1,
-            body: 'Isso é inaceitavel!'
-        },
-        {
-            author: 2,
-            body: 'Compreendo...'
-        },{
-            author: 1,
-            body: 'Lorem ipsum dolor siet amet'
-        },
-        {
-            author: 1,
-            body: 'Isso é inaceitavel!'
-        },
-        {
-            author: 2,
-            body: 'Compreendo...'
-        },{
-            author: 1,
-            body: 'Lorem ipsum dolor siet amet'
-        },
-        {
-            author: 1,
-            body: 'Isso é inaceitavel!'
-        },
-        {
-            author: 2,
-            body: 'Compreendo...'
-        },{
-            author: 1,
-            body: 'Lorem ipsum dolor siet amet'
-        },
-        {
-            author: 1,
-            body: 'Isso é inaceitavel!'
-        },
-        {
-            author: 2,
-            body: 'Compreendo...'
-        },{
-            author: 1,
-            body: 'Lorem ipsum dolor siet amet'
-        },
-        {
-            author: 1,
-            body: 'Isso é inaceitavel!'
-        },
-        {
-            author: 2,
-            body: 'Compreendo...'
-        }
-    ]);
+    const [list, setList] = useState([]);
+    const [users, setUsers] = useState([]);
 
     useEffect(() => {
         if(body.current.scrollHeight > body.current.offsetHeight) {
             body.current.scrollTop = body.current.scrollHeight - body.current.offsetHeight;
         }
     }, [list]);
+
+    useEffect(() => {
+        setList([]);
+        let unsub = Api.onChatContent(data.chatId, setList, setUsers);
+        return unsub;
+    }, [data.chatId]);
 
     const handleEmojiClick = (e, emojiObject) => {
         setText(text + emojiObject.emoji);
@@ -133,16 +73,26 @@ export default ({user})=> {
         }
     };
 
+    const handleInputKeyUp = (e) => {
+        if(e.keyCode === 13) {
+            handleSendClick();
+        }
+    }
+
     const handleSendClick = () => {
-        
+        if(text !== '') {
+            Api.sendMessage(data, user.id, 'text', text, users);
+            setText('');
+            setEmojiOpen(false);
+        }
     };
 
     return (
         <div className="chatWindow">
             <div className="chatWindow--header">
                 <div className="chatWindow--headerinfo">
-                    <img className="chatWindow--avatar" src="https://img.lovepik.com/element/40150/6018.png_860.png" alt=""></img>
-                    <div className="chatWindow--name">Walter Cruz</div>
+                    <img className="chatWindow--avatar" src={data.image} alt=""></img>
+                    <div className="chatWindow--name">{data.title}</div>
                 </div>
 
                 <div className="chatWindow--headerbuttons">
@@ -205,6 +155,7 @@ export default ({user})=> {
                     className="chatWindow--input" 
                     value={text}
                     onChange={e=>setText(e.target.value)}
+                    onKeyUp={handleInputKeyUp}
                     />
                 </div>
 

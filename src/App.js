@@ -20,11 +20,15 @@ export default () => {
   const [chatlist, setChatList] = useState([]);
   const [showNewChat, setShowNewChat] = useState(false);
   const [activeChat, setActiveChat] = useState({});
-  const[user, setUser] = useState({
-    id: 'QR66VIcbzdWNtHrk1V7GQkZEPJy1',
-    name: 'Walter Cruz',
-    avatar: 'https://graph.facebook.com/3643279839049620/picture'
-  });
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    if(user !== null) {
+      let unsub = Api.onChatList(user.id, setChatList);
+      return unsub;
+    }
+  }, [user]);
+
 
   const handleLoginData = async (fbUser) => {
     let newUser = {
@@ -34,8 +38,8 @@ export default () => {
     };
 
     // TODO: adicionar no firebase...
-    await Api.addUser(newUser);
     setUser(newUser);
+    await Api.addUser(newUser);
   };
 
   if(user === null) {
@@ -45,14 +49,6 @@ export default () => {
   const handleNewChat = () => {
     setShowNewChat(true);
   };
-
-  useEffect(() => {
-    if(user !== null) {
-      let unsub = Api.onChatList(user.id, setChatList);
-      return unsub;
-    }
-  }, [user]);
-
 
   return (
     <div className="app-window">
@@ -93,7 +89,7 @@ export default () => {
       </div>
       <div className="contentarea">  
         {activeChat.chatId !== undefined &&
-          <ChatWindow user={user} />
+          <ChatWindow user={user} data={activeChat} />
         }
 
         {activeChat.chatId === undefined &&
