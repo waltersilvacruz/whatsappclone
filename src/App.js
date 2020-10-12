@@ -12,7 +12,7 @@ import SearchIcon from '@material-ui/icons/Search';
 export default () => {
 
   const [chatlist, setChatList] = useState([
-    {}, {}, {}, {}
+    {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
   ]);
 
   return (
