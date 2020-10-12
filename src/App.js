@@ -2,6 +2,7 @@ import React, { useState, useEffect} from 'react';
 import './App.css';
 
 import ChatItemList from './components/ChatListItem';
+import ChatIntro from './components/ChatIntro';
 
 //icones
 import DonutLargeIcon from '@material-ui/icons/DonutLarge';
@@ -14,6 +15,8 @@ export default () => {
   const [chatlist, setChatList] = useState([
     {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
   ]);
+
+  const [activeChat, setActiveChat] = useState({});
 
   return (
     <div className="app-window">
@@ -48,8 +51,12 @@ export default () => {
         ))}
         </div>
       </div>
-      <div className="contentarea">        
-        ... content
+      <div className="contentarea">  
+
+
+        {activeChat.chatId === undefined &&
+          <ChatIntro />
+        }
       </div>
     </div>
   );
