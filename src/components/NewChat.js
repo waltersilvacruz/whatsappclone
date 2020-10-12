@@ -15,7 +15,7 @@ export default ({user, chatlist, show, setShow}) => {
                 let results = await Api.getContactList(user.id);
                 setList(results);
             }
-        };
+        }; 
 
         getList();
     }, [user]);
@@ -26,6 +26,7 @@ export default ({user, chatlist, show, setShow}) => {
 
     const addNewChat = async (destino)=> {
         await Api.addNewChat(user, destino);
+        handleClose();
     };
 
     return (

@@ -40,6 +40,39 @@ export default {
     },
 
     addNewChat:async (user, destino) => {
+        let newChat = await db.collection('chats').add({
+            messages: [],
+            users: [user.id, destino.id]
+        });
 
+        db.collection('users').doc(user.id).update({
+            chats: firebase.firestore.FieldValue.arrayUnion({
+                chatId: newChat.id,
+                title: destino.name,
+                image: destino.avatar,
+                with: destino.id
+            })
+        });
+
+        db.collection('users').doc(destino.id).update({
+            chats: firebase.firestore.FieldValue.arrayUnion({
+                chatId: newChat.id,
+                title: user.name,
+                image: user.avatar,
+                with: user.id
+            })
+        });
+    },
+
+    onChatList: (userId, setChatList) => {
+        return db.collection('users').doc(userId).onSnapshot((doc) => {
+            if(doc.exists) {
+                let data = doc.data();
+
+                if(data.chats) {
+                    setChatList(data.chats);
+                }
+            }
+        });
     }
 };

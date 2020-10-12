@@ -18,9 +18,7 @@ import SearchIcon from '@material-ui/icons/Search';
 export default () => {
 
   const [chatlist, setChatList] = useState([]);
-
   const [showNewChat, setShowNewChat] = useState(false);
-
   const [activeChat, setActiveChat] = useState({});
   const[user, setUser] = useState({
     id: 'QR66VIcbzdWNtHrk1V7GQkZEPJy1',
@@ -46,7 +44,15 @@ export default () => {
 
   const handleNewChat = () => {
     setShowNewChat(true);
-  }
+  };
+
+  useEffect(() => {
+    if(user !== null) {
+      let unsub = Api.onChatList(user.id, setChatList);
+      return unsub;
+    }
+  }, [user]);
+
 
   return (
     <div className="app-window">
