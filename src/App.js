@@ -3,6 +3,7 @@ import './App.css';
 
 import ChatItemList from './components/ChatListItem';
 import ChatIntro from './components/ChatIntro';
+import ChatWindow from './components/ChatWindow';
 
 //icones
 import DonutLargeIcon from '@material-ui/icons/DonutLarge';
@@ -13,7 +14,11 @@ import SearchIcon from '@material-ui/icons/Search';
 export default () => {
 
   const [chatlist, setChatList] = useState([
-    {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
+    {chatId: 1, title: 'Fulano de tal', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQtG0T1Y9ZYq13u7G0EI-igcBsfk-qFbF5cIQ&usqp=CAU'},
+    {chatId: 2, title: 'Fulano de tal', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQtG0T1Y9ZYq13u7G0EI-igcBsfk-qFbF5cIQ&usqp=CAU'},
+    {chatId: 3, title: 'Fulano de tal', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQtG0T1Y9ZYq13u7G0EI-igcBsfk-qFbF5cIQ&usqp=CAU'},
+    {chatId: 4, title: 'Fulano de tal', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQtG0T1Y9ZYq13u7G0EI-igcBsfk-qFbF5cIQ&usqp=CAU'},
+    {chatId: 5, title: 'Fulano de tal', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQtG0T1Y9ZYq13u7G0EI-igcBsfk-qFbF5cIQ&usqp=CAU'},
   ]);
 
   const [activeChat, setActiveChat] = useState({});
@@ -47,12 +52,16 @@ export default () => {
         {chatlist.map((item, key)=> (
           <ChatItemList 
             key={key}
+            active={activeChat.chatId === item.chatId}
+            onClick={()=>setActiveChat(item)}
           />
         ))}
         </div>
       </div>
       <div className="contentarea">  
-
+        {activeChat.chatId !== undefined &&
+          <ChatWindow />
+        }
 
         {activeChat.chatId === undefined &&
           <ChatIntro />
