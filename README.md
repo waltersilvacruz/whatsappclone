@@ -1,4 +1,28 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Whatsapp Clone
+
+This ReactJS app is a simple exercise, trying to clone the Whatsapp Web application.
+
+## Requirements
+
+This application uses Firebase's Firestore and Facebook authentication.
+You must create a Facebook app in the Facebook's Developers Panel and setup the Authentication method in the Firebase's Console.
+
+In order to build and run this app, you'll need:
+- Node v12.14.0 or above
+- Yarn 1.22.0 or above
+
+### Installation
+
+Clone the repository:
+```
+https://github.com/waltersilvacruz/whatsappclone.git
+```
+
+Install dependences:
+```
+cd whatsappclone
+yarn install
+```
 
 ## Available Scripts
 
